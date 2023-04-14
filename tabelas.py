@@ -54,6 +54,8 @@ class Dados:
                 rotas[destino][origem] = {'tempo_transporte': tempo_transporte, 'custo': custo_transporte}
 
         return rotas
+    
+# TESTES
 
 def print_cidades(cidades):
     count = 0

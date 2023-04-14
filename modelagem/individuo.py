@@ -1,4 +1,5 @@
 from tabelas import Dados
+import random
 
 class Individuo:
     def __init__(self, dados : Dados, rota = None):
@@ -18,3 +19,5 @@ class Individuo:
     def mutacao(self):
         return 0 #implementar
     
+
+# TESTES

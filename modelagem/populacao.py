@@ -1,6 +1,5 @@
 from tabelas import Dados
 from individuo import Individuo
-import random
 
 class Populacao:
     def __init__(self, individuo : Individuo, tamanho):
@@ -8,14 +7,10 @@ class Populacao:
         self.fitness = 0
 
     def fitness_populacao(self, individuo : Individuo):
-        return individuo.fitness()
+        return 0 #implementar
     
     def mutacao(self):
-        nova_populacao = []
-        for i in self.populacao:
-            nova_populacao.append(i.mutacao())
-
-        return nova_populacao
+        return 0 #implementar
     
     def crossover(self):
         return 0 #implementar
@@ -24,4 +19,5 @@ class Populacao:
         return 0 #implementar
 
 
+# TESTES
 ind = Individuo(Dados())
