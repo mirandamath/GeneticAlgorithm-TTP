@@ -1,4 +1,4 @@
-from dados.tabelas import Dados
+from tabelas import Dados
 import random
 
 class Individuo:

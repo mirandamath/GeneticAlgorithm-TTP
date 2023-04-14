@@ -8,7 +8,7 @@ class Dados:
 
     def get_cidades(self):
         cidades = []
-        with open('dados/cidades.csv', 'r') as file:
+        with open('cidades.csv', 'r') as file:
             reader = csv.reader(file)
             for row in reader:
                 origem, destino, tempo_transporte, custo = row
@@ -21,7 +21,7 @@ class Dados:
     
     def get_itens(self):
         itens = {}
-        with open('dados/itens.csv', 'r') as file:
+        with open('itens.csv', 'r') as file:
             reader = csv.reader(file)
             for row in reader:
                 # separando cada coluna do arquivo
@@ -37,7 +37,7 @@ class Dados:
 
     def get_rotas(self):
         rotas = {}
-        with open('dados/cidades.csv', 'r') as file:
+        with open('cidades.csv', 'r') as file:
             reader = csv.reader(file)
             for row in reader:
                 origem, destino, tempo_transporte, custo_transporte = row

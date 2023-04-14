@@ -1,9 +1,9 @@
-from  import Dados
+from tabelas import Dados
 from individuo import Individuo
 
 class Populacao:
     def __init__(self, individuo : Individuo, tamanho):
-        self.populacao = [Individuo()]*tamanho
+        self.populacao = [Individuo(Dados())]*tamanho
         self.fitness = 0
 
     def fitness_populacao(self, individuo : Individuo):
@@ -21,6 +21,6 @@ class Populacao:
 
 # TESTES
 ind = Individuo(Dados())
-pop = Populacao(ind, 10)
+pop = Populacao(Individuo, 10)
 
 print(pop.populacao)
