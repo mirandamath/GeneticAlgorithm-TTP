@@ -1,4 +1,4 @@
-from tabelas import Dados
+from  import Dados
 from individuo import Individuo
 
 class Populacao:
@@ -21,3 +21,6 @@ class Populacao:
 
 # TESTES
 ind = Individuo(Dados())
+pop = Populacao(ind, 10)
+
+print(pop.populacao)
