@@ -28,15 +28,7 @@ class Individuo:
         
         for elemento in randoms:
             rota.append(elemento)
-        # for i in range(13):
-        #     rota.append(cidades[randoms[i]])
-        # if i != 0 and i != 1:
-        #     rota[i] = 'Escondidos'
             
-        
-        #forçar escondidos a ser a ultima posição é opcional 
-        # caso nao seja considera-se como rota ate a posiçao que escondidos se encontra  caso seja considera-se rota ate a ultima posiçao
-        #rota[-1] = rota[0]
         return rota
 
     #mudar aleatoriamente duas cidades menos a primeira e segunda que é escondidos sempre

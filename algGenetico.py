@@ -18,7 +18,6 @@ class AlgoritmoGeneticoPopulacao:
     
   def rodar(self):
     ultimo_fitness = self.populacao.top_fitness()
-    # print(ultimo_fitness)
 
     while True:
       if self.geracoes <= self.geracoes_max and self.erro > self.erro_min:
