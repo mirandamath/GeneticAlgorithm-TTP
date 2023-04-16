@@ -30,9 +30,6 @@ class Populacao:
 
         mid = len(self.populacao) // 2
 
-        # primeira parte seria index 0 (tem escondidos) até o segundo escondidos
-        # e l e    l a e
-
         pop_direita = self.populacao[:mid]
         pop_esquerda = self.populacao[mid:]
 
@@ -66,22 +63,22 @@ class Populacao:
         return self.top_individuo().fitness()
     
     # populacao mutada e popualcao crossover
-    def sort_pop(self):
+    def sort_pop(self, populacao):
         # ordenar a população de acordo com o fitness
         sorted_pop = []
         # adicionar o primeiro individuo da população
-        sorted_pop.append(self.populacao[0])
+        sorted_pop.append(populacao[0])
 
         # percorrer sorted_pop e comparar o fitness atual com os outros
-        for i in range(1, len(self.populacao)):
+        for i in range(1, len(populacao)):
             for j in range(len(sorted_pop)):
-                if self.populacao[i].fitness() > sorted_pop[j].fitness():
+                if populacao[i].fitness() > sorted_pop[j].fitness():
                     # se pop[i] for maior queremos colocar antes de sorted_pop[j], pois o fitness dele eh melhor
-                    sorted_pop.insert(j, self.populacao[i])
+                    sorted_pop.insert(j, populacao[i])
                     break
                 # se o fitness for menor, queremos colocar por ultimo
                 elif j == len(sorted_pop) - 1:
-                    sorted_pop.append(self.populacao[i])
+                    sorted_pop.append(populacao[i])
                     break
         return sorted_pop
         
@@ -90,7 +87,7 @@ class Populacao:
     def selecionar(self, pop_mutada, pop_crossover):
         pop_total = self.populacao + pop_mutada + pop_crossover
         # fazer uma lista ordenada com os fitness de cada individuo
-        nova_lista = self.sort_pop()
+        nova_lista = self.sort_pop(pop_total)
         # nova_lista = sorted(pop_total, key=self.fitness_populacao(), reverse=True)
         melhores = nova_lista[:self.n]
         self.populacao = melhores
