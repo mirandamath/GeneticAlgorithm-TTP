@@ -82,4 +82,4 @@ dados = Dados()
 
 # print_cidades(dados.cidades)
 # print_itens(dados.itens)
-# print_rotas(dados.rotas)
+# print(dados.rotas)

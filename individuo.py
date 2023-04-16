@@ -1,5 +1,7 @@
 from tabelas import Dados
+import numpy as np
 import random
+import copy
 
 class Individuo:
     def __init__(self, dados : Dados, rota = None):
@@ -8,17 +10,30 @@ class Individuo:
         if rota == None:
             self.rota = self.rand_rota()
 
+        self.peso = self.peso_roubo()
+        self.valor = self.valor_roubo()
+        self.tempo = self.tempo_roubo()
         self.fit = self.fitness()
 
 
     #geramos uma lista de numeros aleatorios de acordo com a qtd de cidades e usamos ela para pegar cidades aleatorias do csv
     def rand_rota(self):
         rota = []
-        cidades = self.dados.cidades
-        randoms = random.sample(range(len(cidades)), len(cidades))
         rota.append('Escondidos')
-        for i in range(13):
-            rota.append(cidades[randoms[i]])
+        cidades = self.dados.cidades
+        # randoms = random.sample(range(len(cidades)), len(cidades))
+        randoms = np.random.choice(cidades, len(cidades), replace=False)
+        while randoms[0] == 'Escondidos':
+            randoms = np.random.choice(cidades, len(cidades), replace=False)
+        
+        for elemento in randoms:
+            rota.append(elemento)
+        # for i in range(13):
+        #     rota.append(cidades[randoms[i]])
+        # if i != 0 and i != 1:
+        #     rota[i] = 'Escondidos'
+            
+        
         #forçar escondidos a ser a ultima posição é opcional 
         # caso nao seja considera-se como rota ate a posiçao que escondidos se encontra  caso seja considera-se rota ate a ultima posiçao
         #rota[-1] = rota[0]
@@ -26,12 +41,16 @@ class Individuo:
 
     #mudar aleatoriamente duas cidades menos a primeira e segunda que é escondidos sempre
     def mutacao(self):
-        rota = self.rota
+        rota = copy.deepcopy(self.rota)
         qtd_cidades = 2
         randoms = random.sample(range(1, len(rota)), qtd_cidades)
         #trocando de poisçao as cidades que foram aleatoriamente escolhidas
-        rota[randoms[0]] = rota[randoms[1]]
-        rota[randoms[1]] = rota[randoms[0]]
+
+        r0 = rota[randoms[0]]
+        r1 = rota[randoms[1]]
+        
+        rota[randoms[0]] = r1
+        rota[randoms[1]] = r0
         
         return Individuo(self.dados, rota)
     
@@ -53,14 +72,87 @@ class Individuo:
             return False
         
 
+    def rota_de_verdade(self):
+        rota= []
+        i = 1
+        rota.append(self.rota[0])
+        while self.rota[i] != 'Escondidos':
+            rota.append(self.rota[i])
+            i += 1
+        rota.append(self.rota[i])
+        return rota
+    
+    def tempo_roubo(self):
+        tempo = 0
+        rd = self.rota_de_verdade()
+        r = self.dados.rotas
+        
+        for i in range(len(rd) - 1):
+            tempo += r[rd[i]][rd[i+1]]['tempo_transporte']
+
+        return tempo
+    
+    def custo_roubo(self):
+        tempo = 0
+        rd = self.rota_de_verdade()
+        r = self.dados.rotas
+        
+        for i in range(len(rd) - 1):
+            tempo += r[rd[i]][rd[i+1]]['custo']
+        return 0
+
+    #usar para calcular peso e valor ja que escondidos nao tem nada ent precisamos so da rota entre os dois para calculo de valor e peso
+    def rota_sem_escondidos(self):
+        rota= []
+        i = 1
+        while self.rota[i] != 'Escondidos':
+            rota.append(self.rota[i])
+            i += 1
+        return rota
+    
+    def valor_roubo(self):
+        roubado = self.dados.itens
+        rota = self.rota_sem_escondidos()
+        valor_roubado = 0
+        
+        for cidade in rota:
+            valor_roubado += roubado[cidade]['valor']
+        
+        return valor_roubado
+    
+    def peso_roubo(self):
+        roubado = self.dados.itens
+        rota = self.rota_sem_escondidos()
+        peso_roubado = 0
+        
+        for cidade in rota:
+            peso_roubado += roubado[cidade]['peso']
+        
+        return peso_roubado
+    
+#   def lucro(self):
+#       return self.valor_roubo() - self.custo_roubo()
     
     def fitness(self):
-        return 0 #implementar
-    
+        if self.check_rota() == False:
+            return float('-inf')
+        if self.peso_roubo() > 20:
+            return float('-inf')
+        if self.tempo_roubo() > 72:
+            return float('-inf')
+        
+        
+        return self.valor_roubo() - self.custo_roubo()
+
 
 # TESTES
 
-data = Dados()
+""" data = Dados()
 ind = Individuo(data)
-r = ind.rand_rota()
-print(r)
+print(ind.rota)
+r2= ind.rota_de_verdade()
+r3 = ind.valor_roubo()
+r4 = ind.peso_roubo()
+r5 = ind.tempo_roubo()
+print(r2)
+print(r3, r4, r5) """
