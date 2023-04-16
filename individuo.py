@@ -11,7 +11,14 @@ class Individuo:
         self.fit = self.fitness()
 
     def rand_rota(self):
-        return 0 #implementar rota aleatoria
+        rota = []
+        cidades = self.dados.cidades
+        randon_list = random.sample(range(len(cidades)), len(cidades))
+        rota.append('Escondidos')
+        for i in range(13):
+            rota.append(cidades[randon_list[i]])
+        rota[-1] = rota[0]
+        return rota
 
     def fitness(self):
         return 0 #implementar
@@ -21,3 +28,8 @@ class Individuo:
     
 
 # TESTES
+
+data = Dados()
+ind = Individuo(data)
+r = ind.rand_rota()
+print(r)
