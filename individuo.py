@@ -23,7 +23,7 @@ class Individuo:
         cidades = self.dados.cidades
         # randoms = random.sample(range(len(cidades)), len(cidades))
         randoms = np.random.choice(cidades, len(cidades), replace=False)
-        while randoms[0] == 'Escondidos':
+        while randoms[0] == 'Escondidos' or randoms[1] == 'Escondidos':
             randoms = np.random.choice(cidades, len(cidades), replace=False)
         
         for elemento in randoms:
@@ -45,13 +45,16 @@ class Individuo:
         qtd_cidades = 2
         randoms = random.sample(range(1, len(rota)), qtd_cidades)
         #trocando de poisçao as cidades que foram aleatoriamente escolhidas
-
+            
         r0 = rota[randoms[0]]
         r1 = rota[randoms[1]]
         
         rota[randoms[0]] = r1
         rota[randoms[1]] = r0
         
+        if rota[1] == 'Escondidos':
+            return self.mutacao()
+
         return Individuo(self.dados, rota)
     
     
@@ -93,12 +96,12 @@ class Individuo:
         return tempo
     
     def custo_roubo(self):
-        tempo = 0
+        custo = 0
         rd = self.rota_de_verdade()
         r = self.dados.rotas
         
         for i in range(len(rd) - 1):
-            tempo += r[rd[i]][rd[i+1]]['custo']
+            custo += r[rd[i]][rd[i+1]]['custo']
         return 0
 
     #usar para calcular peso e valor ja que escondidos nao tem nada ent precisamos so da rota entre os dois para calculo de valor e peso

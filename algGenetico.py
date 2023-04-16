@@ -1,5 +1,5 @@
-GERACOES_MAX = 100
-ERRO_MIN = 0.001
+GERACOES_MAX = 100000
+ERRO_MIN = 0.0001
 
 class AlgoritmoGeneticoPopulacao:
   def __init__(self, populacao, geracoes_max=GERACOES_MAX,
